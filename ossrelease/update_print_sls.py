@@ -40,7 +40,6 @@ def main():
     branch_name = 'update_print_version'
     _cmd_run(git_cmd + ['checkout', '-b', branch_name])
     print('New branch: {0}'.format(branch_name))
-    print('branch = {0}'.format(_cmd_run(git_cmd + ['branch'])))
 
     # Update release version for "latest"
     if new_stable:
@@ -74,8 +73,8 @@ def main():
 
     # Commit changes and push up the branch
     print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, REMOTE))
-    print(_cmd_run(git_cmd + ['commit', '-m', commit_msg]))
-    print(_cmd_run(git_cmd + ['push', REMOTE, branch_name]))
+    _cmd_run(git_cmd + ['commit', '-m', commit_msg])
+    _cmd_run(git_cmd + ['push', REMOTE, branch_name])
 
 
 def parse_args():
