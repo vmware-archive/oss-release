@@ -81,8 +81,8 @@ setup_branch_names() {
     UPSTREAM_BR=${EASY_UPSTREAM_BRANCH}
 
     if [ ${EASY_UPSTREAM_BRANCH} == "develop" ]; then
-        DOWNSTREAM_BR="oxygen"
-    elif [ ${EASY_UPSTREAM_BRANCH} == "oxygen" ]; then
+        DOWNSTREAM_BR="2018.3"
+    elif [ ${EASY_UPSTREAM_BRANCH} == "2018.3" ]; then
         DOWNSTREAM_BR="2017.7"
     elif [ ${EASY_UPSTREAM_BRANCH} == "2017.7" ]; then
         DOWNSTREAM_BR="2016.11"
@@ -90,8 +90,7 @@ setup_branch_names() {
         DOWNSTREAM_BR="2016.3"
     else
         echo "Invalid option. Easy release branch names are only supported for "
-        echo "the '2016.11', '2017.7', 'oxygen', and 'develop' branches for "
-        echo "merge forwards for the Salt repo."
+        echo "newer branches, beginning with \'2016.11\'."
         echo "Please use the '-d' and '-u' options instead."
         exit 1
     fi

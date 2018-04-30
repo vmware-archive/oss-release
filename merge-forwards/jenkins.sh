@@ -81,16 +81,16 @@ setup_branch_names() {
     UPSTREAM_BR=${EASY_UPSTREAM_BRANCH}
 
     if [ ${EASY_UPSTREAM_BRANCH} == "master" ]; then
-        DOWNSTREAM_BR="oxygen"
-    elif [ ${EASY_UPSTREAM_BRANCH} == "oxygen"  ]; then
+        DOWNSTREAM_BR="2018.3"
+    elif [ ${EASY_UPSTREAM_BRANCH} == "2018.3"  ]; then
         DOWNSTREAM_BR="2017.7"
     elif [ ${EASY_UPSTREAM_BRANCH} == "2017.7"  ]; then
         DOWNSTREAM_BR="2016.11"
     elif [ ${EASY_UPSTREAM_BRANCH} == "2016.11" ]; then
         DOWNSTREAM_BR="2016.3"
     else
-        echo "Invalid option. Easy release branch names are only supported for the "
-        echo "'2016.11' and 'master' branches for merge forwards for the salt-jenkins repo."
+        echo "Invalid option. Easy release branch names are only supported for "
+        echo "newer branches, beginning with \'2016.11\'."
         echo "Please use the '-d' and '-u' options instead."
         exit 1
     fi
