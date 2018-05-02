@@ -1,0 +1,5 @@
+Hi all!
+
+The _salt_version_ release will be going live on repo.saltstack.com shortly. This means that the version of Salt in /latest/ for the _branch_ branch will be changing to _salt_version_.
+
+If you wish to pin to a minor or major release rather than updating to the latest versions when they are released, please follow the instructions on repo.saltstack.com for each distribution.
