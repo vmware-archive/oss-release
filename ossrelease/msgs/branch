@@ -1,0 +1,3 @@
+Hi all,
+
+We will branching _salt_version_ soon. The tag will follow a couple days afterwards, after all PRs are merged and automated tests are passing. Please email open-release-team@saltstack.com if you want to ensure your PR is merged for the upcoming release if it is not currently in that branch.
