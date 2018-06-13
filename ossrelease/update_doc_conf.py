@@ -8,7 +8,7 @@ import subprocess
 
 REPO_PATH = '/Users/pinyon/SaltStack/salt'
 REMOTE = 'rallytime'
-BRANCHES = ['2016.11', '2017.7', 'develop']
+BRANCHES = ['2017.7', '2018.3', 'develop']
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
         _cmd_run(['git', git_dir, work_tree, 'checkout', branch])
 
         # Create a new branch
-        branch_name = '{0}_update_version_doc'.format(branch)
+        branch_name = 'update_version_doc_{0}'.format(branch)
         _cmd_run(['git', git_dir, work_tree, 'checkout', '-b', branch_name])
         print('New branch: {0}'.format(branch_name))
 
