@@ -7,10 +7,8 @@ import os
 import smtplib
 import sys
 
-MSG_DIR = '/home/ch3ll/git/oss-release/ossrelease/msgs/'
-SEND_EMAIL = ''
-SEND_PASSWD = ''
-RCV_EMAIL = ''
+# import ossrelease modules
+import conf
 
 
 def parse_args():
@@ -25,6 +23,11 @@ def parse_args():
     parser.add_argument('--list-msg',
                         action='store_true',
                         help='List all message options you can send')
+    parser.add_argument('--sender',
+                        help='Specify email you want to send it from')
+    parser.add_argument('--receiver',
+                        nargs='*',
+                        help='Specify email you want to send it to')
 
     return parser.parse_args()
 
@@ -33,18 +36,26 @@ def _get_subject(msg, version):
         subject = '{0} Going Live Soon'.format(version)
     elif msg == 'branch':
         subject = '{0} Branch Creation'.format(version)
+    elif msg == 'enterprise':
+        subject = '{0} Ready for Testing'.format(version)
+    elif msg in ('live_prev', 'live_latest', 'community_pkg'):
+        subject = '{0} Released'.format(version)
     elif msg == 'test':
         subject = '{0} Test Message'.format(version)
+    else:
+        print('There is not a corresponding message for {0}. Check the msgs'
+              ' directory'.format(msg))
+        sys.exit(1)
 
     return subject
 
-def send_email(msg, version):
+def send_email(msg, version, opts, sender='', receiver=''):
     '''
     send an email
     '''
     branch = '.'.join(version.split('.')[:-1])
 
-    with open(os.path.join(MSG_DIR, msg), 'r') as f:
+    with open(os.path.join(opts['msg_dir'], msg), 'r') as f:
             body = f.read()
             body = body.replace('_salt_version_', version)
             body = body.replace('_branch_', branch)
@@ -54,7 +65,7 @@ def send_email(msg, version):
     # confirm we want to send the email
     confirm = input('Sending email from: {0} to: {1}. The body of the'
                     'message will be:\n {2}. Are you sure you want to '
-                    'continue: (y/n)'.format(SEND_EMAIL, RCV_EMAIL, body))
+                    'continue: (y/n)'.format(sender, receiver, body))
 
     if confirm == 'y':
         pass
@@ -64,19 +75,19 @@ def send_email(msg, version):
     server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
     server.ehlo()
     try:
-        server.login(SEND_EMAIL, SEND_PASSWD)
+        server.login(sender, opts['send_passwd'])
     except smtplib.SMTPAuthenticationError as e:
         print('Could not authenticate with mail server.')
         sys.exit(2)
 
     message = """From: %s\nTo: %s\nSubject: %s\n\n%s
-        """ % (SEND_EMAIL, RCV_EMAIL, subject, body)
+        """ % (sender, receiver, subject, body)
 
-    server.sendmail(SEND_EMAIL, RCV_EMAIL, message)
+    server.sendmail(sender, receiver, message)
 
-def _list_msgs():
+def _list_msgs(opts):
     print('Here are the following message options available')
-    files = os.listdir(MSG_DIR)
+    files = os.listdir(opts['msg_dir'])
     for x in files:
         print(x)
     sys.exit()
@@ -86,11 +97,14 @@ def main():
     Run!
     '''
     # Parse args and define some basic params
+    opts = conf.get_conf()
     args = parse_args()
     if args.list_msg:
-        _list_msgs()
+        _list_msgs(opts)
 
-    send_email(args.msg, args.salt_ver)
+    send_email(args.msg, args.salt_ver, opts,
+               sender=args.sender,
+               receiver=args.receiver)
 
 if __name__ == '__main__':
     main()

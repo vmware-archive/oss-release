@@ -1,0 +1,12 @@
+Hi all,
+
+We have announced the _salt_version_ release of Salt.
+
+Release notes can be found here:
+https://docs.saltstack.com/en/develop/topics/releases/_salt_version_.html
+
+Sources are available on PyPI:
+https://pypi.python.org/pypi/salt/_salt_version_
+
+We want to test any package builds when they become available, so if you can, pl
+ease reply with the URL to your packages once you have them built.
