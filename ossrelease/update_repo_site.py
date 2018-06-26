@@ -25,7 +25,7 @@ def main():
     # replace versions
     repo_dir = opts['REPO_SALTSTACK_DIR']
     file_dir = os.path.join(repo_dir, 'content', 'repo')
-    if args.replace():
+    if args.replace:
         branch = '.'.join(args.version.split('.')[:-1])
         pre_ver = branch + '.' + str(int(args.version[-1]) -1)
         fed_pre_ver = branch + '.' + str(int(args.version[-1]) -2)
