@@ -6,9 +6,8 @@ Update the release version in the doc/conf.py file for each specified branch.
 import argparse
 import subprocess
 
-REPO_PATH = '/Users/pinyon/SaltStack/salt'
-REMOTE = 'rallytime'
-BRANCHES = ['2017.7', '2018.3', 'develop']
+# import ossrelease modules
+import conf
 
 
 def main():
@@ -17,17 +16,18 @@ def main():
     Prints results to the screen.
     '''
     # Parse args and define some basic params
+    opts = conf.get_conf()
     args = parse_args()
     new_stable = args.new_latest
     old_stable = args.old_latest
     new_prev = args.new_previous
     old_prev = args.old_previous
 
-    git_dir = '--git-dir={0}/.git'.format(REPO_PATH)
-    work_tree = '--work-tree={0}'.format(REPO_PATH)
-    file_name = '{0}/doc/conf.py'.format(REPO_PATH)
+    git_dir = '--git-dir={0}/.git'.format(opts['SALT_REPO_PATH'])
+    work_tree = '--work-tree={0}'.format(opts['SALT_REPO_PATH'])
+    file_name = '{0}/doc/conf.py'.format(opts['SALT_REPO_PATH'])
 
-    for branch in BRANCHES:
+    for branch in opts['SALT_BRANCHES']:
         print('Updating release version for {0}'.format(branch))
 
         # Check out base branch
@@ -42,7 +42,7 @@ def main():
         if new_stable:
             print('Replacing {0} with {1} in branch {2}'.format(old_stable, new_stable, branch))
             _replace_txt(file_name, old_stable, new_stable)
-    
+
         # Update release version for "previous"
         if new_prev:
             print('Replacing {0} with {1} in branch {2}'.format(old_prev, new_prev, branch))
@@ -50,13 +50,13 @@ def main():
 
         # Set the commit title
         commit_msg = 'Update release versions for the {0} branch'.format(branch)
-        
+
         # Add files to git
         _cmd_run(['git', git_dir, work_tree, 'add', 'doc/conf.py'])
 
-        print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, REMOTE))
+        print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, opts['USER_REMOTE']))
         _cmd_run(['git', git_dir, work_tree, 'commit', '-m', commit_msg])
-        _cmd_run(['git', git_dir, work_tree, 'push', REMOTE, branch_name])
+        _cmd_run(['git', git_dir, work_tree, 'push', opts['USER_REMOTE'], branch_name])
 
 
 def parse_args():
@@ -84,7 +84,7 @@ def _replace_txt(file_name, old=None, new=None):
     with open(file_name, 'w') as fh_:
         fh_.write(file_txt.replace(old, new))
 
-  
+
 def _cmd_run(cmd_args):
     '''
     Runs the given command in a subprocess and returns a dictionary containing
