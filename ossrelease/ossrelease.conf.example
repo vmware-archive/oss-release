@@ -1,0 +1,35 @@
+##### Variables used in update_doc_conf script####
+# location to salt directory
+SALT_REPO_PATH: '/home/ch3ll/git/salt'
+
+# the name of your github remote to your fork of salt
+USER_REMOTE: 'origin'
+
+# current active salt branches
+SALT_BRANCHES: ['2017.7', '2018.3', 'develop']
+
+##### Variables used in update_repo_site script####
+# directory path to repo-landing
+REPO_SALTSTACK_DIR: ''
+
+# name of script used to scp local build files to deploy box
+REPO_UPLOAD_SCRIPT: '/home/ch3ll/bin/upload.sh'
+
+# username of deploy box to staging
+REPO_DEPLOY_SRV_USR: ''
+
+# hostname of deploy box to staging
+REPO_DEPLOY_SRV: ''
+
+# key used to auth to box that deploys to staging
+REPO_DEPLOY_KEY: '/id_rsa'
+
+##### Variables used in send_email script####
+# directory where the msgs directory is located
+msg_dir: '/home/ch3ll/git/oss-release/ossrelease/msgs/'
+
+# password to your email
+send_passwd: ''
+
+# Github Auth Token
+GITHUB_TOKEN: ''

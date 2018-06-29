@@ -24,20 +24,21 @@ def main():
 
     # replace versions
     repo_dir = opts['REPO_SALTSTACK_DIR']
-    branch = '.'.join(args.version.split('.')[:-1])
-    pre_ver = branch + '.' + str(int(args.version[-1]) -1)
-    fed_pre_ver = branch + '.' + str(int(args.version[-1]) -2)
     file_dir = os.path.join(repo_dir, 'content', 'repo')
-    if branch == '2017.7':
-        file = '2017.7.md'
-    elif branch == '2018.3':
-        file = 'index.md'
+    if args.replace:
+        branch = '.'.join(args.version.split('.')[:-1])
+        pre_ver = branch + '.' + str(int(args.version[-1]) -1)
+        fed_pre_ver = branch + '.' + str(int(args.version[-1]) -2)
+        if branch == '2017.7':
+            file = '2017.7.md'
+        elif branch == '2018.3':
+            file = 'index.md'
 
-    _replace_txt(os.path.join(file_dir, file), old=pre_ver, new=args.version)
+        _replace_txt(os.path.join(file_dir, file), old=pre_ver, new=args.version)
 
-    # replace fedora versions for latest
-    if 'index' in file:
-        _replace_txt(os.path.join(file_dir, file), old=fed_pre_ver, new=pre_ver)
+        # replace fedora versions for latest
+        if 'index' in file:
+            _replace_txt(os.path.join(file_dir, file), old=fed_pre_ver, new=pre_ver)
 
     if args.build:
         print('Building Docs')
@@ -75,6 +76,9 @@ def parse_args():
     parser.add_argument('-b', '--build',
                         action='store_true',
                         help='Build Docs')
+    parser.add_argument('-r', '--replace',
+                        action='store_true',
+                        help='Replace salt versions in repo.saltstack.com web file')
 
     return parser.parse_args()
 
