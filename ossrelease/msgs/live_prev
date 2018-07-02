@@ -1,7 +1,7 @@
 We are pleased to announce the _salt_version_ release of Salt!
 
 Release notes can be found here:
-https://docs.saltstack.com/en/develop/topics/releases/_salt_version_.html
+https://docs.saltstack.com/en/_branch_/topics/releases/_salt_version_.html
 Instructions for installing the latest packages can be found here:
 http://repo.saltstack.com
 
