@@ -24,6 +24,14 @@ REPO_DEPLOY_SRV: ''
 # key used to auth to box that deploys to staging
 REPO_DEPLOY_KEY: '/id_rsa'
 
+# directory to the sse docs git cloned directory
+SSE_DIR: ''
+
+
+##### Variables used in update_print_sls script####
+# path to the builddocs git cloned directory
+DOC_BUILDS_PATH: '/git/builddocs'
+
 ##### Variables used in send_email script####
 # directory where the msgs directory is located
 msg_dir: '/home/ch3ll/git/oss-release/ossrelease/msgs/'
