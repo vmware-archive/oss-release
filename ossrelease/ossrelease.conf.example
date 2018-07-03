@@ -32,6 +32,9 @@ SSE_DIR: ''
 # path to the builddocs git cloned directory
 DOC_BUILDS_PATH: '/git/builddocs'
 
+# name of your git remote
+FORK_REMOTE: ''
+
 ##### Variables used in send_email script####
 # directory where the msgs directory is located
 msg_dir: '/home/ch3ll/git/oss-release/ossrelease/msgs/'

@@ -9,8 +9,6 @@ import subprocess
 # import ossrelease modules
 import conf
 
-REMOTE = 'rallytime'
-
 
 def main():
     '''
