@@ -9,8 +9,8 @@ def parse_args():
     Parse the CLI options.
     '''
     # Define parser and set up basic options
-    parser = argparse.ArgumentParser(description='Send email notification for release.')
-    parser.add_argument('--salt-ver', help='Specify salt version to use in email')
+    parser = argparse.ArgumentParser(description='Create a release on github.')
+    parser.add_argument('--salt-ver', help='Specify salt version to create release')
 
     return parser.parse_args()
 
