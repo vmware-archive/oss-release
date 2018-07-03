@@ -34,11 +34,37 @@ def main():
         elif branch == '2018.3':
             file = 'index.md'
 
-        _replace_txt(os.path.join(file_dir, file), old=pre_ver, new=args.version)
+        edit_file = os.path.join(file_dir, file)
+
+        # now commit and push changes
+        git_dir = '--git-dir={0}/.git'.format(opts['SSE_DIR'])
+        work_tree = '--work-tree={0}'.format(opts['SSE_DIR'])
+
+        git_cmd = ['git', git_dir, work_tree]
+
+        # Check out master branch
+        _cmd_run(git_cmd + ['checkout', 'master'])
+
+        branch_name = 'repo_update_{0}-2'.format(args.version)
+        _cmd_run(git_cmd + ['checkout', '-b', branch_name])
+        print('New branch: {0}'.format(branch_name))
+
+        # new date
+        if args.date:
+            _replace_txt(edit_file, old=pre_ver,
+                         new=args.date, replace_line='set release_date')
+
+        _replace_txt(edit_file, old=pre_ver, new=args.version)
 
         # replace fedora versions for latest
         if 'index' in file:
-            _replace_txt(os.path.join(file_dir, file), old=fed_pre_ver, new=pre_ver)
+            _replace_txt(edit_file, old=fed_pre_ver, new=pre_ver)
+
+        commit_msg = 'Update release version and date for repo landing to {0}'.format(args.version)
+        _cmd_run(git_cmd + ['add', edit_file])
+        print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, opts['FORK_REMOTE']))
+        _cmd_run(git_cmd + ['commit', '-m', commit_msg])
+        _cmd_run(git_cmd + ['push', opts['FORK_REMOTE'], branch_name])
 
     if args.build:
         print('Building Docs')
@@ -79,11 +105,20 @@ def parse_args():
     parser.add_argument('-r', '--replace',
                         action='store_true',
                         help='Replace salt versions in repo.saltstack.com web file')
+    parser.add_argument('-d', '--date',
+                        help='Replace release date in repo.saltstack.com web file')
 
     return parser.parse_args()
 
 
-def _replace_txt(file_name, old=None, new=None):
+def _replace_txt(file_name, old=None, new=None, replace_line=None):
+    if replace_line:
+        with open(file_name) as fh_:
+            file_txt = fh_.read().splitlines()
+            for line in file_txt:
+                if replace_line in line:
+                    old = line.split('\'')[-2]
+
     if not os.path.isfile(file_name):
         print('{0} file does not exist'.format(file_name))
         sys.exit(1)

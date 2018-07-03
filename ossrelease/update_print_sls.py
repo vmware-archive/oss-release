@@ -6,8 +6,8 @@ Update the release version in the builddocs/print.sls file.
 import argparse
 import subprocess
 
-REPO_PATH = '/Users/pinyon/SaltStack/builddocs'
-REMOTE = 'rallytime'
+# import ossrelease modules
+import conf
 
 
 def main():
@@ -16,6 +16,7 @@ def main():
     Prints results to the screen.
     '''
     # Parse args and define some basic params
+    opts = conf.get_conf()
     args = parse_args()
     new_stable = args.new_latest
     old_stable = args.old_latest
@@ -25,9 +26,9 @@ def main():
     old_prev = args.old_previous
     update_previous = args.previous_branch
 
-    git_dir = '--git-dir={0}/.git'.format(REPO_PATH)
-    work_tree = '--work-tree={0}'.format(REPO_PATH)
-    file_name = '{0}/builddocs/print.sls'.format(REPO_PATH)
+    git_dir = '--git-dir={0}/.git'.format(opts['DOC_BUILDS_PATH'])
+    work_tree = '--work-tree={0}'.format(opts['DOC_BUILDS_PATH'])
+    file_name = '{0}/builddocs/print.sls'.format(opts['DOC_BUILDS_PATH'])
 
     git_cmd = ['git', git_dir, work_tree]
 
@@ -60,8 +61,8 @@ def main():
 
         # Update the base branch for "previous"
         if update_previous:
-            new_base = new_stable.rsplit('.', 1)[0]
-            old_base = old_stable.rsplit('.', 1)[0]
+            new_base = new_prev.rsplit('.', 1)[0]
+            old_base = old_prev.rsplit('.', 1)[0]
             print('Updating previous stable branch {0} with {1}'.format(old_base, new_base))
             _replace_txt(file_name, old_base, new_base)
 
@@ -72,9 +73,9 @@ def main():
     _cmd_run(git_cmd + ['add', 'builddocs/print.sls'])
 
     # Commit changes and push up the branch
-    print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, REMOTE))
+    print('Committing change and pushing branch {0} to {1}\n'.format(branch_name, opts['FORK_REMOTE']))
     _cmd_run(git_cmd + ['commit', '-m', commit_msg])
-    _cmd_run(git_cmd + ['push', REMOTE, branch_name])
+    _cmd_run(git_cmd + ['push', opts['FORK_REMOTE'], branch_name])
 
 
 def parse_args():
