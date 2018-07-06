@@ -1,0 +1,12 @@
+The branch creation and feature freeze for our upcoming _salt_version_ release is now complete. If your PR was merged into develop before today or has a _salt_version_ label applied to the PR it will be included in the _salt_version_ release. We will review the PRs submitted before today again this week to ensure we did not miss any needed features for _salt_version_. We will also be making efforts this week to merge the remaining PRs with _salt_version_ labels. We are no longer accepting new features for the _salt_version_ release.
+
+If you have a question about a particular PR submitted please email the Release Team at open-release-team@saltstack.com.
+
+Note that we will be doing regular merge forwards from other active branches.
+
+The _salt_version_ branch will be renamed to a version once we are closer to a release date. Because of the way our versioning system works, we did create a versioned tag (_tag_) which is subject to change but reflects our target release month.
+
+Below is the current draft of the release notes for the _salt_version_ release. If you have any additions to the release notes please feel free to contribute.
+https://docs.saltstack.com/en/develop/topics/releases/_salt_version_.html
+
+We hope to have a public RC for testing soon. Thanks, as always, for your contributions.

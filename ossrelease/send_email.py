@@ -18,6 +18,8 @@ def parse_args():
     # Define parser and set up basic options
     parser = argparse.ArgumentParser(description='Send email notification for release.')
     parser.add_argument('--salt-ver', help='Specify salt version to use in email')
+    parser.add_argument('--tag', help='Specify the tag used for new feature branch')
+    parser.add_argument('--date', help='Specify a date for various notices related to a release')
     parser.add_argument('--msg', help='Specify which message to use.'
                                     'You can use --list-msg to see all options')
     parser.add_argument('--list-msg',
@@ -40,6 +42,10 @@ def _get_subject(msg, version):
         subject = '{0} Ready for Testing'.format(version)
     elif msg in ('live_prev', 'live_latest', 'community_pkg'):
         subject = '{0} Released'.format(version)
+    elif msg in ('feature_branch_complete'):
+        subject = '{0} Branch and Feature Freeze Complete'.format(version)
+    elif msg in ('feature_branch_notice'):
+        subject = 'Feature Branch {0} Coming soon'.format(version)
     elif msg == 'test':
         subject = '{0} Test Message'.format(version)
     else:
@@ -49,7 +55,7 @@ def _get_subject(msg, version):
 
     return subject
 
-def send_email(msg, version, opts, sender='', receiver=''):
+def send_email(msg, version, opts, args, sender='', receiver=''):
     '''
     send an email
     '''
@@ -59,6 +65,10 @@ def send_email(msg, version, opts, sender='', receiver=''):
             body = f.read()
             body = body.replace('_salt_version_', version)
             body = body.replace('_branch_', branch)
+            if args.date:
+                body = body.replace('_date_', args.date)
+            elif args.tag:
+                body = body.replace('_tag_', args.tag)
 
     subject = _get_subject(msg, version)
 
@@ -102,7 +112,7 @@ def main():
     if args.list_msg:
         _list_msgs(opts)
 
-    send_email(args.msg, args.salt_ver, opts,
+    send_email(args.msg, args.salt_ver, opts, args,
                sender=args.sender,
                receiver=args.receiver)
 
