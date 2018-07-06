@@ -1,0 +1,11 @@
+In preparation for our upcoming _salt_version_ release, we plan to create a _salt_version_ branch on _date_ off of the develop branch of Salt. The creation of the branch will also constitute a feature freeze for the _salt_version_ release.
+
+After the feature freeze and branch, we will only be accepting critical bug fixes into the new _salt_version_ branch. We will be doing regular merge forwards from the other active branches.
+
+If you would like to include any features in the _salt_version_ release, please get them in before the end of the month. Make sure any features are merged into develop before _date_. We will be doing regular merge forwards into develop up to that point.
+
+Below is the current draft of the release notes for the _salt_version_ release. Please add any new features to the below release notes.
+
+https://docs.saltstack.com/en/develop/topics/releases/_salt_version_.html
+
+Thanks, as always, for your contributions
