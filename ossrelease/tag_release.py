@@ -40,8 +40,23 @@ def main():
     tag_upstream = args.upstream
     tag_develop = args.develop
 
+    # Setup based git command
+    git_cmd = [
+        'git',
+        '--git-dir={0}/.git'.format(REPO_PATH),
+        '--work-tree={0}'.format(REPO_PATH)
+    ]
+
     if not tag.startswith('v'):
         print('Error: Tag must start with the letter \'v\'.')
+        return
+
+    if args.delete:
+        print('Deleting local tag {0}.'.format(tag))
+        _cmd_run(git_cmd + ['tag', '-d', tag])
+
+        print('Deleting remote tag {0} from upstream {1}.'.format(tag, REMOTE))
+        _cmd_run(git_cmd + ['push', REMOTE, ':refs/tags/{0}'.format(tag)])
         return
 
     # Do some tag format error checking
@@ -60,13 +75,6 @@ def main():
         print('Error: tag must start with the letter \'v\' and be in a '
               '<year.month.version> format. Exiting.')
         return
-
-    # Setup based git command
-    git_cmd = [
-        'git',
-        '--git-dir={0}/.git'.format(REPO_PATH),
-        '--work-tree={0}'.format(REPO_PATH)
-    ]
 
     # Fetch SaltStack upstream to ensure we're up-to-date
     print('Fetching SaltStack upstream.')
@@ -136,7 +144,8 @@ def parse_args():
     parser.add_argument('--develop', help='Flag to create a new tag on the develop branch. '
                                           'This provides the point to create a new feature '
                                           'release branch from.')
-
+    parser.add_argument('--delete', help='Flag to delete a tag',
+                        action='store_true')
     return parser.parse_args()
 
 
