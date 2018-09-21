@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Update the release version in the builddocs/print.sls file.
+Generates the man pages for a given release
 '''
 
 import argparse
@@ -36,9 +36,6 @@ def main():
         file_path = man_build_dir + file_
         print('Copying file: {0}'.format(file_path))
         shutil.copy(file_path, man_dir)
-    print('Adding Salt Version: {0} for man pages')
-
-
 
     for file_ in os.listdir(man_dir):
         _replace_txt(man_dir + file_, old='"{0}.*" '.format(branch),
