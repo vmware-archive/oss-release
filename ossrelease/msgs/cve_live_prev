@@ -1,0 +1,17 @@
+We are pleased to announce the _salt_version_ release of Salt!
+
+Release notes can be found here:
+https://docs.saltstack.com/en/_branch_/topics/releases/_salt_version_.html
+Instructions for installing the latest packages can be found here:
+http://repo.saltstack.com
+
+Sources are available on PyPI:
+https://pypi.python.org/pypi/salt/_salt_version_
+
+_salt_version_ is a security release. The following CVE's were fixed as part of this release:
+
+< enter cve's information here >
+
+NOTE: We are still currently continuing the following release tasks and will update here when they are completed: Building Docs for Release (This includes Release Notes) and Testing the Downloads of Live Packages.
+
+Thank you, as always, for your contributions.
