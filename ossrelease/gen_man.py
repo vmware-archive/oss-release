@@ -21,8 +21,8 @@ def main():
     opts = conf.get_conf()
     args = parse_args()
     doc_dir = os.path.join(opts['SALT_REPO_PATH'], 'doc')
-    man_build_dir = doc_dir + '_build/man/'
-    man_dir = doc_dir + 'man/'
+    man_build_dir = os.path.join(doc_dir, '_build', 'man')
+    man_dir = os.path.join(doc_dir, 'man')
     branch = '.'.join(args.version.split('.')[:-1])
 
     print('Building man pages in directory: {0}'.format(doc_dir))
