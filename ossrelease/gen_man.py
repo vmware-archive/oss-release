@@ -20,7 +20,7 @@ def main():
     # Parse args and define some basic params
     opts = conf.get_conf()
     args = parse_args()
-    doc_dir = opts['SALT_REPO_PATH'] + '/doc/'
+    doc_dir = os.path.join(opts['SALT_REPO_PATH'], 'doc')
     man_build_dir = doc_dir + '_build/man/'
     man_dir = doc_dir + 'man/'
     branch = '.'.join(args.version.split('.')[:-1])
@@ -65,7 +65,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description='Update the salt man pages'
     )
-    parser.add_argument('-v', '--version',
+    parser.add_argument('--version',
                         help='Version of salt we are building man pages')
 
     return parser.parse_args()
