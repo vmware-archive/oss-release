@@ -17,6 +17,13 @@
 #   * COMMIT:          The commit sha from the oldest commit in the pull request.
 #=============================================================================================
 
+for env_var in "${SALT_JENKINS_REPO}" "${ORIGIN}"; do
+  if [[ -z "${env_var}" ]] ; then
+      echo "Missing environment variable"
+      exit 1;
+  fi
+done
+
 PR=
 BRANCH=
 COMMIT=
@@ -64,9 +71,9 @@ do
     esac
 done
 
-cd ~/Saltstack/salt-jenkins/
+cd ${SALT_JENKINS_REPO}
 
 # Perform the backport!
 git fetch upstream pull/$PR/head:bp-$PR
 git rebase --onto $BRANCH $COMMIT~1 bp-$PR && \
-git push rallytime bp-$PR
+git push ${ORIGIN} bp-$PR
