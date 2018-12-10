@@ -22,6 +22,13 @@
 #   * UPSTREAM_BR:      The newer branch that will have the older branch merged into it.
 #=============================================================================================
 
+for env_var in "${SALT_REPO}" "${ORIGIN}"; do
+  if [[ -z "${env_var}" ]] ; then
+      echo "Missing environment variable"
+      exit 1;
+  fi
+done
+
 DOWNSTREAM_BR=
 UPSTREAM_BR=
 EASY_UPSTREAM_BRANCH=
@@ -68,7 +75,7 @@ do
     esac
 done
 
-cd ~/SaltStack/salt
+cd ${SALT_REPO}
 
 # Check if there are any unstaged changes
 if [ -n "$(git status --porcelain)" ]; then
@@ -124,9 +131,9 @@ TOP_LINE_MSG="Merge branch '$DOWNSTREAM_BR' into '$UPSTREAM_BR'"
 git merge ${DOWNSTREAM_BR} -m "$TOP_LINE_MSG" --no-commit
 
 # If the merge is clean, commit the result with a "No conflicts"
-# addition to the underlying commit message and push to "rallytime".
+# addition to the underlying commit message and push to "origin".
 RET_CODE=$?
 if [ ${RET_CODE} -eq 0 ]; then
     git commit -m "$TOP_LINE_MSG" -m "No conflicts."
-    git push rallytime merge-${UPSTREAM_BR}
+    git push ${ORIGIN} merge-${UPSTREAM_BR}
 fi
