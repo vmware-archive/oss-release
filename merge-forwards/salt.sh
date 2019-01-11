@@ -88,8 +88,8 @@ setup_branch_names() {
     UPSTREAM_BR=${EASY_UPSTREAM_BRANCH}
 
     if [ ${EASY_UPSTREAM_BRANCH} == "develop" ]; then
-        DOWNSTREAM_BR="fluorine"
-    elif [ ${EASY_UPSTREAM_BRANCH} == "fluorine" ]; then
+        DOWNSTREAM_BR="2019.2"
+    elif [ ${EASY_UPSTREAM_BRANCH} == "2019.2" ]; then
         DOWNSTREAM_BR="2018.3"
     elif [ ${EASY_UPSTREAM_BRANCH} == "2018.3" ]; then
         DOWNSTREAM_BR="2017.7"

@@ -18,7 +18,7 @@ if [ -n "$(git status --porcelain)" ]; then
     echo "\nChanges present - Exiting.";
 else
     # Update all relevant, constant branches
-    for branch in 2017.7 2018.3 fluorine develop
+    for branch in 2017.7 2018.3 2019.2 develop
     do
         git checkout $branch
         git pull upstream $branch
