@@ -41,7 +41,7 @@ def main():
         _replace_txt(man_dir + file_, old='"{0}.*" '.format(branch),
                      new='"{0}" '.format(args.version), regex=True)
 
-        print('Adding Salt Version {0} to file: {1}'.format(args.version,
+        print('Adding Salt Version {0} to file: {1}'.format(args.version, file_))
 
 def _replace_txt(file_name, old=None, new=None, regex=False):
     with open(file_name) as fh_:
