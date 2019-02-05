@@ -42,6 +42,8 @@ def _get_subject(msg, version):
         subject = '{0} Ready for Testing'.format(version)
     elif msg in ('live_prev', 'live_latest', 'community_pkg'):
         subject = '{0} Released'.format(version)
+    elif msg in ('cve_live_prev', 'cve_live_latest', 'cve_community_pkg'):
+        subject = '{0} Released - Security Advisory'.format(version)
     elif msg in ('feature_branch_complete'):
         subject = '{0} Branch and Feature Freeze Complete'.format(version)
     elif msg in ('feature_branch_notice'):
