@@ -38,7 +38,7 @@ def main():
         shutil.copy(file_path, man_dir)
 
     for file_ in os.listdir(man_dir):
-        _replace_txt(man_dir + file_, old='"{0}.*" '.format(branch),
+        _replace_txt(os.path.join(man_dir, file_), old='"{0}.*" '.format(branch),
                      new='"{0}" '.format(args.version), regex=True)
 
         print('Adding Salt Version {0} to file: {1}'.format(args.version, file_))
