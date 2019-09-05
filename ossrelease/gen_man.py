@@ -33,7 +33,7 @@ def main():
     print('Copying new man files from {0} to {1}'.format(man_build_dir,
                                                          man_dir))
     for file_ in os.listdir(man_build_dir):
-        file_path = os.path.join(man_build_dir, file_) 
+        file_path = os.path.join(man_build_dir, file_)
         print('Copying file: {0}'.format(file_path))
         shutil.copy(file_path, man_dir)
 
