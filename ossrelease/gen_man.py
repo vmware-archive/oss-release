@@ -23,7 +23,7 @@ def main():
     doc_dir = os.path.join(opts['SALT_REPO_PATH'], 'doc')
     man_build_dir = os.path.join(doc_dir, '_build', 'man')
     man_dir = os.path.join(doc_dir, 'man')
-    branch = '.'.join(args.version.split('.')[:-1])
+    old = args.old_version
 
     print('Building man pages in directory: {0}'.format(doc_dir))
 
@@ -38,7 +38,7 @@ def main():
         shutil.copy(file_path, man_dir)
 
     for file_ in os.listdir(man_dir):
-        _replace_txt(os.path.join(man_dir, file_), old='"{0}.*" '.format(branch),
+        _replace_txt(os.path.join(man_dir, file_), old='"{0}*"'.format(old),
                      new='"{0}" '.format(args.version), regex=True)
 
         print('Adding Salt Version {0} to file: {1}'.format(args.version, file_))
@@ -67,6 +67,9 @@ def parse_args():
     )
     parser.add_argument('--version',
                         help='Version of salt we are building man pages')
+
+    parser.add_argument('--old-version',
+                        help='Old Version of salt we are replacing in the man pages')
 
     return parser.parse_args()
 
